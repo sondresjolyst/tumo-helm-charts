@@ -55,6 +55,12 @@ spec:
               subPath: acl.conf
               readOnly: true
             {{- end }}
+          env:
+            - name: MQTT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.auth.secretName }}
+                  key: password
           livenessProbe:
             tcpSocket:
               port: 1883
