@@ -9,6 +9,6 @@ entries:
     name: mosquitto
     type: application
     urls:
-    - https://sondresjolyst.github.io/tumo-helm-charts/mosquitto-0.1.0.tgz
+    - https://sondresjolyst.github.io/tumo-helm-charts/charts/mosquitto/mosquitto-0.1.0.tgz
     version: 0.1.0
 generated: "2024-01-12T12:48:54.566861528+01:00"
