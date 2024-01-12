@@ -5,9 +5,7 @@ metadata:
   labels:
     {{- include "mosquitto.labels" . | nindent 4 }}
 spec:
-  {{- if not .Values.autoscaling.enabled }}
-  replicas: {{ .Values.replicaCount }}
-  {{- end }}
+  replicas: 1
   selector:
     matchLabels:
       {{- include "mosquitto.selectorLabels" . | nindent 6 }}
@@ -34,19 +32,46 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
-            - name: http
-              containerPort: 80
+            - name: mqtt
+              containerPort: 1883
               protocol: TCP
+            {{- if .Values.mqttOverWebsocket }}
+            - name: mqtt-ws
+              containerPort: 9001
+              protocol: TCP
+            {{- end }}
+          volumeMounts:
+            - name: config
+              mountPath: /mosquitto/config/mosquitto.conf
+              subPath: mosquitto.conf
+              readOnly: true
+            {{- if .Values.auth.enabled }}
+            - name: secrets
+              mountPath: /mosquitto/config/passwords.conf
+              subPath: passwords.conf
+              readOnly: true
+            - name: config
+              mountPath: /mosquitto/config/acl.conf
+              subPath: acl.conf
+              readOnly: true
+            {{- end }}
           livenessProbe:
-            httpGet:
-              path: /
-              port: http
+            tcpSocket:
+              port: 1883
           readinessProbe:
-            httpGet:
-              path: /
-              port: http
+            tcpSocket:
+              port: 1883
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+      volumes:
+        - name: config
+          configMap:
+            name: {{ include "mosquitto.fullname" . }}
+        {{- if .Values.auth.enabled }}
+        - name: secrets
+          secret:
+            secretName: {{ include "mosquitto.fullname" . }}
+        {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
