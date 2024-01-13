@@ -39,9 +39,6 @@ spec:
           volumeMounts:
             - name: config
               mountPath: /mosquitto/config
-            - name: passwords
-              mountPath: /mosquitto/config/passwords.conf
-              subPath: passwords.conf
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
@@ -71,8 +68,7 @@ spec:
               readOnly: true
             {{- if .Values.auth.enabled }}
             - name: secrets
-              mountPath: /mosquitto/config/passwords.conf
-              subPath: passwords.conf
+              mountPath: /mosquitto/config/
               readOnly: true
             - name: config
               mountPath: /mosquitto/config/acl.conf
