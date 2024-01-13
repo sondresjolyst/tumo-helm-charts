@@ -16,6 +16,12 @@ Install the chart:
 helm install mosquitto mosquitto/mosquitto -f your-values.yaml
 ```
 
+Make release:
+
+```bash
+helm package .
+helm repo index charts/mosquitto --url https://sondresjolyst.github.io/tumo-helm-charts/charts/mosquitto --merge ../index.yaml
+```
 ## Passwords
 
 Use the software `mosquitto_passwd` to generate the password in the correct format:
