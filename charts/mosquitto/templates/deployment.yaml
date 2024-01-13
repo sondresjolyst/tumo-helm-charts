@@ -24,7 +24,7 @@ spec:
           command: ["/bin/sh", "-c"]
           args:
             - |
-              echo "${MQTT_USERNAME}:$(MQTT_PASSWORD)" > /mosquitto/passwords/passwords.conf
+              echo '${MQTT_USERNAME}:${MQTT_PASSWORD}' > /mosquitto/passwords/passwords.conf
               chmod 0700 /mosquitto/passwords/passwords.conf
               chown nobody /mosquitto/passwords/passwords.conf
           env:
