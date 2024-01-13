@@ -30,7 +30,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: {{ .Values.auth.secretName }}
-                  key: password
+                  key: username
             - name: MQTT_PASSWORD
               valueFrom:
                 secretKeyRef:
