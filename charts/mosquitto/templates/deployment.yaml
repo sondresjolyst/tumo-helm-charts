@@ -39,6 +39,8 @@ spec:
           volumeMounts:
             - name: config
               mountPath: /mosquitto/config
+            - name: passwords
+              mountPath: /mosquitto/config
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
@@ -66,7 +68,7 @@ spec:
               mountPath: /mosquitto/config/mosquitto.conf
               subPath: mosquitto.conf
               readOnly: true
-            - name: config
+            - name: passwords
               mountPath: /mosquitto/config/passwords.conf
               subPath: passwords.conf
               readOnly: true
@@ -88,6 +90,8 @@ spec:
         - name: config
           configMap:
             name: {{ include "mosquitto.fullname" . }}
+        - name: passwords
+          emptyDir: {}
         {{- if .Values.auth.enabled }}
         - name: secrets
           secret:
