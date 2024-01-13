@@ -16,6 +16,7 @@ general:
 
 auth:
   enabled: true
+  secretName: mosquittoconf
   users:
     - username: admin
       acl:

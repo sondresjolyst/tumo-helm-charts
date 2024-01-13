@@ -28,12 +28,13 @@ spec:
           env:
             - name: MQTT_USERNAME
               valueFrom:
-                fieldRef:
-                  fieldPath: spec.template.spec.containers[0].env[0].value
+                secretKeyRef:
+                  name: {{ .Values.auth.secretName }}
+                  key: password
             - name: MQTT_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: my-secret
+                  name: {{ .Values.auth.secretName }}
                   key: password
           volumeMounts:
             - name: config
