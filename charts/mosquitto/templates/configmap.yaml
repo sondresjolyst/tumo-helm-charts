@@ -20,7 +20,7 @@ data:
     
     {{- if .Values.auth.enabled }}
     allow_anonymous false
-    password_file /mosquitto/config/passwords.conf
+    password_file /mosquitto/passwords/passwords.conf
     acl_file /mosquitto/config/acl.conf
     {{- else }}
     allow_anonymous true
