@@ -18,6 +18,26 @@ spec:
       labels:
         {{- include "mosquitto.selectorLabels" . | nindent 8 }}
     spec:
+      initContainers:
+        - name: init
+          image: busybox
+          command: ["/bin/sh", "-c"]
+          args:
+            - |
+              echo "${MQTT_USERNAME}:$(MQTT_PASSWORD)" > /mosquitto/config/passwords.conf
+          env:
+            - name: MQTT_USERNAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.template.spec.containers[0].env[0].value
+            - name: MQTT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: my-secret
+                  key: password
+          volumeMounts:
+            - name: config
+              mountPath: /mosquitto/config
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
@@ -55,12 +75,6 @@ spec:
               subPath: acl.conf
               readOnly: true
             {{- end }}
-          env:
-            - name: MQTT_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Values.auth.secretName }}
-                  key: password
           livenessProbe:
             tcpSocket:
               port: 1883

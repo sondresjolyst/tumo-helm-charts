@@ -18,7 +18,6 @@ auth:
   enabled: true
   users:
     - username: admin
-      password: ""
       acl:
         - topics: "#"
           access: readwrite
