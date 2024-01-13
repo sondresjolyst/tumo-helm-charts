@@ -74,12 +74,6 @@ spec:
               mountPath: /mosquitto/passwords/passwords.conf
               subPath: passwords.conf
               readOnly: true
-            {{- if .Values.auth.enabled }}
-            - name: secrets
-              mountPath: /mosquitto/config/acl.conf
-              subPath: acl.conf
-              readOnly: true
-            {{- end }}
           livenessProbe:
             tcpSocket:
               port: 1883

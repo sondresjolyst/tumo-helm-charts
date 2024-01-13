@@ -19,9 +19,6 @@ auth:
   secretName: mosquittoconf
   users:
     - username: admin
-      acl:
-        - topics: "#"
-          access: readwrite
 
 imagePullSecrets: []
 nameOverride: ""

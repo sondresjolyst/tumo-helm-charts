@@ -21,20 +21,6 @@ data:
     {{- if .Values.auth.enabled }}
     allow_anonymous false
     password_file /mosquitto/passwords/passwords.conf
-    acl_file /mosquitto/config/acl.conf
     {{- else }}
     allow_anonymous true
     {{- end }}
-  {{- if .Values.auth.enabled }}
-  acl.conf: |-
-    {{- range $value := .Values.auth.users }}
-    user {{ $value.username }}
-    {{- if $value.acl }}
-    {{- range $acl := $value.acl }}
-    pattern {{ $acl.access }} {{ $acl.topic }}
-    {{- end }}
-    {{- else }}
-    pattern readwrite #
-    {{- end }}
-    {{- end }}
-  {{- end }}
