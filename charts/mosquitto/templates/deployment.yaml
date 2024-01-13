@@ -66,11 +66,12 @@ spec:
               mountPath: /mosquitto/config/mosquitto.conf
               subPath: mosquitto.conf
               readOnly: true
+            - name: config
+              mountPath: /mosquitto/config/passwords.conf
+              subPath: passwords.conf
+              readOnly: true
             {{- if .Values.auth.enabled }}
             - name: secrets
-              mountPath: /mosquitto/config/
-              readOnly: true
-            - name: config
               mountPath: /mosquitto/config/acl.conf
               subPath: acl.conf
               readOnly: true
@@ -87,8 +88,6 @@ spec:
         - name: config
           configMap:
             name: {{ include "mosquitto.fullname" . }}
-        - name: passwords
-          emptyDir: {}
         {{- if .Values.auth.enabled }}
         - name: secrets
           secret:
