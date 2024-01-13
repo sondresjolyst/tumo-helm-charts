@@ -3,6 +3,16 @@ entries:
   mosquitto:
   - apiVersion: v2
     appVersion: 2.0.18
+    created: "2024-01-13T03:10:57.389182747+01:00"
+    description: A Helm chart for Eclipse Mosquitto
+    digest: 258bd4de573f43acf63eb27012742fb20ff2d444f0301c3d8a9a1291da885be5
+    name: mosquitto
+    type: application
+    urls:
+    - https://sondresjolyst.github.io/tumo-helm-charts/charts/mosquitto/mosquitto-0.1.9.tgz
+    version: 0.1.9
+  - apiVersion: v2
+    appVersion: 2.0.18
     created: "2024-01-13T02:56:04.613406798+01:00"
     description: A Helm chart for Eclipse Mosquitto
     digest: 93c0b7c154033d2e345d3f6362678a27c6cd0d2c3e847344cc1e830909f5a8d2
